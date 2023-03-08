@@ -4,15 +4,12 @@ const items = [
   // {price: '505'},
   {price: 350},
 ];
-
-const calculateTotalPurchase = (items) => {
-  let result = 0;
-  for(const item of items) {
-    const price = item.price;
-    if (typeof price !== 'number') throw 'Price is not a number';
-    if (price < 0) continue;
-    result += price;
-  }
-  return result;
+const isNonNegative = (price) => {
+  if (typeof price !== 'number') throw 'Price is not a number';
+  return price >= 0;
 };
+const calculateTotalPurchase = (items) => items.map((x) => x.price)
+  .filter(isNonNegative)
+  .reduce((accumulator, x) => accumulator + x);
+
 console.log(`Total sum is ${calculateTotalPurchase(items)}`);
